@@ -1,14 +1,15 @@
 import { DynamicModule } from "@nestjs/common";
 import { ClientsModule, Transport } from "@nestjs/microservices";
-import { UsersService } from "./users.service";
-import { UsersController } from "./users.controllor";
-import { AuthService } from "../auth/auth.service";
+import { AuthService } from "./auth.service";
+import { AuthController } from "./auth.controller";
+import { CacheModule } from "@nestjs/cache-manager";
 
-export class UsersModule {
+export class AuthModule {
     static register(): DynamicModule {
         return {
-            module: UsersModule,
+            module: AuthModule,
             imports: [
+                CacheModule.register(),
                 ClientsModule.register([
                     {
                         name: 'user-service',
@@ -22,8 +23,8 @@ export class UsersModule {
                     }
                 ])
             ],
-            controllers: [UsersController],
-            providers: [UsersService]
+            controllers: [AuthController],
+            providers: [AuthService]
         }
     }
 }

@@ -3,7 +3,7 @@ import { ClientProxy } from "@nestjs/microservices";
 import { RMQService, USER_CMD } from "src/constants";
 import { CreateUserInterface } from "./interfaces/create-user.interfaces";
 import { createUserDto } from "./dto/create-users.dto";
-import { catchError, firstValueFrom, lastValueFrom, map } from "rxjs";
+import { Observable, catchError, firstValueFrom, lastValueFrom, map, throwError } from "rxjs";
 
 @Injectable()
 export class UsersService {
@@ -13,27 +13,25 @@ export class UsersService {
 
     }
 
-    async registerUser(payload: CreateUserInterface): Promise<createUserDto> {
-        return firstValueFrom(
-            this.usersServiceQmq.emit(
-                {
-                    cmd: USER_CMD,
-                    method: 'register',
-                },
-                payload,
-            )
+    async registerUser(body: createUserDto): Promise<Observable<any>> {
+        return this.usersServiceQmq.emit(
+            {
+                cmd: USER_CMD,
+                method: 'register',
+            },
+            body,
         )
     }
 
     async ping(): Promise<unknown> {
         try {
             const response = await this.usersServiceQmq.send(
-                { 
-                    cmd: USER_CMD, 
-                    method: 'ping' 
-                }, 
+                {
+                    cmd: USER_CMD,
+                    method: 'ping'
+                },
                 {}
-                ).toPromise();
+            ).toPromise();
             return response;
         } catch (error) {
             throw error;

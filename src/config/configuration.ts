@@ -7,7 +7,7 @@ export default (): any => ({
     },
     authentication: {
         hashSize: 10,
-        secret: process.env.SECRET_KEY || 'super_secret',
+        secret: process.env.JWT_SECRET || 'super_secret',
         jwtOptions: {
             header: {
                 typ: 'access',

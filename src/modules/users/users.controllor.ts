@@ -1,15 +1,14 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
-import { ApiBody, ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBody, ApiTags, ApiBearerAuth, ApiCreatedResponse, ApiBadRequestResponse  } from '@nestjs/swagger';
 import { Payload } from '@nestjs/microservices';
 import { UsersService } from "./users.service";
 import { createUserDto } from './dto/create-users.dto';
-import { CreateUserInterface } from './interfaces/create-user.interfaces';
 
 @Controller('users')
 @ApiTags('user')
 export class UsersController {
     constructor(
-        private readonly usersService: UsersService
+        private readonly usersService: UsersService,
     ) { }
 
     @Post('register')
