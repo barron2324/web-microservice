@@ -5,7 +5,9 @@ export interface usersInterface {
     email: string;
     username: string;
     password: string;
-    refreshToken?: string
-    status: string
-    roles?: rolesUserEnum
+    status: string;
+    roles?: rolesUserEnum;
+    refreshToken?: string;
+    latestLogin?: string;
+    token?: string
 }

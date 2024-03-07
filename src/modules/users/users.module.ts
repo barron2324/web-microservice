@@ -3,12 +3,18 @@ import { ClientsModule, Transport } from "@nestjs/microservices";
 import { UsersService } from "./users.service";
 import { UsersController } from "./users.controllor";
 import { AuthService } from "../auth/auth.service";
+import { PassportModule } from "@nestjs/passport";
+import { JwtStrategy } from "../auth/strategies/jwt.strategy";
 
 export class UsersModule {
     static register(): DynamicModule {
         return {
             module: UsersModule,
             imports: [
+                // PassportModule.register({
+                //     defaultStrategy: 'jwt-user'
+                // }),
+                
                 ClientsModule.register([
                     {
                         name: 'user-service',
@@ -23,7 +29,7 @@ export class UsersModule {
                 ])
             ],
             controllers: [UsersController],
-            providers: [UsersService]
+            providers: [UsersService, JwtStrategy, AuthService]
         }
     }
 }

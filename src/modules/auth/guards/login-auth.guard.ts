@@ -7,7 +7,7 @@ import {
   UnauthorizedException,
   UnprocessableEntityException,
 } from '@nestjs/common'
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt';
 import { AuthGuard } from '@nestjs/passport'
 import { plainToInstance } from 'class-transformer'
 import { usersInterface } from 'src/modules/users/interfaces/users.interface'
@@ -46,11 +46,8 @@ export class LoginAuthGuard extends AuthGuard('jwt') {
       throw new UnprocessableEntityException('Not Found User.')
     }
 
-    let counter: number = (await this.cacheManager.get(`login-failures:${user.email}`)) || 0;
-
-    if (typeof counter !== 'number') {
-      counter = 0;
-    }
+    let counter: number = (
+      await this.cacheManager.get(`login-failures:${user.email}`)) || 0;
 
     if (counter >= 3) {
       throw new UnauthorizedException(
