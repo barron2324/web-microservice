@@ -19,7 +19,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager'
 import { AuthService } from '../auth.service'
 
 @Injectable()
-export class LoginAuthGuard extends AuthGuard('jwt') {
+export class LoginAuthGuard extends AuthGuard('local') {
   private readonly logger = new Logger(LoginAuthGuard.name)
   constructor(
     private readonly authService: AuthService,
@@ -36,6 +36,7 @@ export class LoginAuthGuard extends AuthGuard('jwt') {
     let user: usersInterface
     try {
       user = await this.authService.getByEmail(body.email)
+      this.logger.log(user)
     } catch (e) {
       this.logger.error(e?.message ?? JSON.stringify(e))
       throw new InternalServerErrorException({

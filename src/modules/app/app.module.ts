@@ -13,7 +13,7 @@ import { ThrottlerModule } from "@nestjs/throttler";
             isGlobal: true
         }),
         ThrottlerModule.forRootAsync(throttlerAsyncOptions),
-        AuthModule.register(),
+        AuthModule,
         UsersModule.register(),
     ],
     providers: [throttlerServiceProvider],

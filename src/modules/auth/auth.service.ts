@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
+import { Body, Inject, Injectable, Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { RMQService, USER_CMD } from "src/constants";
 import { loginUserDto } from "./dto/user-login.dto";
@@ -24,9 +24,7 @@ export class AuthService {
                     cmd: USER_CMD,
                     method: 'login',
                 },
-                {
-                    body
-                },
+                body,
             ),
         )
     }
@@ -38,7 +36,7 @@ export class AuthService {
                     cmd: USER_CMD,
                     method: 'getByUserId',
                 },
-                userId,
+                userId
             ),
         )
     }
@@ -52,6 +50,18 @@ export class AuthService {
                 },
                 email,
             ),
+        )
+    }
+
+    async sendEmailUserLogin( email: string): Promise<usersInterface> {
+        return lastValueFrom(
+            this.usersServiceQmq.send(
+                {
+                    cmd: USER_CMD,
+                    method: 'sendEmailUserLogin'
+                },
+                email
+            )
         )
     }
 }

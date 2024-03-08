@@ -4,17 +4,14 @@ import { UsersService } from "./users.service";
 import { UsersController } from "./users.controllor";
 import { AuthService } from "../auth/auth.service";
 import { PassportModule } from "@nestjs/passport";
-import { JwtStrategy } from "../auth/strategies/jwt.strategy";
+import { JwtStrategy } from "../auth/guards/jwt.strategy";
 
 export class UsersModule {
     static register(): DynamicModule {
         return {
             module: UsersModule,
             imports: [
-                // PassportModule.register({
-                //     defaultStrategy: 'jwt-user'
-                // }),
-                
+                PassportModule,
                 ClientsModule.register([
                     {
                         name: 'user-service',
