@@ -1,5 +1,6 @@
 export enum RMQService {
-    USERS = 'user-service'
+    USERS = 'users-service',
+    BOOKS = 'books-service'
 }
 
 export const USER_CMD = 'users'
