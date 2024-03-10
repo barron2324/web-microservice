@@ -21,6 +21,22 @@ export class createUserDto {
 
     @ApiProperty({
         type: String,
+        example: 'fristname',
+        required: true
+    })
+    @IsNotEmpty()
+    fristname: string;
+
+    @ApiProperty({
+        type: String,
+        example: 'lastname',
+        required: true
+    })
+    @IsNotEmpty()
+    lastname: string;
+
+    @ApiProperty({
+        type: String,
         example: '1234',
         required: true
     })

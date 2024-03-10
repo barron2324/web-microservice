@@ -5,6 +5,8 @@ import { UsersModule } from "../users/users.module";
 import { AuthModule } from "../auth/auth.module";
 import { throttlerAsyncOptions, throttlerServiceProvider } from "src/throttler.providers";
 import { ThrottlerModule } from "@nestjs/throttler";
+import { APP_GUARD } from "@nestjs/core";
+import { JwtRoleGuard } from "../auth/guards/jwt-role.guard";
 
 @Module({
     imports: [
@@ -16,7 +18,13 @@ import { ThrottlerModule } from "@nestjs/throttler";
         AuthModule,
         UsersModule.register(),
     ],
-    providers: [throttlerServiceProvider],
+    providers: [
+        throttlerServiceProvider,
+        {
+            provide: APP_GUARD,
+            useClass: JwtRoleGuard,
+        },
+    ],
 })
 
 export class AppModule { }

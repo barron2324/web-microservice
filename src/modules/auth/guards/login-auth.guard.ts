@@ -43,9 +43,15 @@ export class LoginAuthGuard extends AuthGuard('local') {
         message: e?.message ?? JSON.stringify(e),
       })
     }
+
     if (!user) {
       throw new UnprocessableEntityException('Not Found User.')
-    }
+    } 
+
+    const blockUser = await this.authService.getBlockUser(user.email)
+    if (blockUser) {
+      throw new UnauthorizedException('This account benned!')
+    } 
 
     let counter: number = (
       await this.cacheManager.get(`login-failures:${user.email}`)) || 0;

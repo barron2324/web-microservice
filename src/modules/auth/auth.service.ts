@@ -53,12 +53,24 @@ export class AuthService {
         )
     }
 
-    async sendEmailUserLogin( email: string): Promise<usersInterface> {
+    async getByUsername(username: string): Promise<usersInterface> {
         return lastValueFrom(
             this.usersServiceQmq.send(
                 {
                     cmd: USER_CMD,
-                    method: 'sendEmailUserLogin'
+                    method: 'getByUsername',
+                },
+                username,
+            ),
+        )
+    }
+
+    async getBlockUser(email: string): Promise<usersInterface> {
+        return lastValueFrom(
+            this.usersServiceQmq.send(
+                {
+                    cmd: USER_CMD,
+                    method: 'getBlockUser'
                 },
                 email
             )

@@ -1,9 +1,11 @@
 import { Inject, Injectable, Logger } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { RMQService, USER_CMD } from "src/constants";
-import { CreateUserInterface } from "./interfaces/create-user.interfaces";
 import { createUserDto } from "./dto/create-users.dto";
-import { Observable, catchError, firstValueFrom, lastValueFrom, map, throwError } from "rxjs";
+import { Observable } from "rxjs";
+import { ChangePasswordEntyty } from "./entities/change-password.entity";
+import { updateUserEntyty } from "./entities/update-user.entity";
+import { updateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -23,18 +25,39 @@ export class UsersService {
         )
     }
 
-    async ping(): Promise<unknown> {
-        try {
-            const response = await this.usersServiceQmq.send(
-                {
-                    cmd: USER_CMD,
-                    method: 'ping'
-                },
-                {}
-            ).toPromise();
-            return response;
-        } catch (error) {
-            throw error;
-        }
+    changePasswordUser(userId: string, hashPassword: string): Observable<ChangePasswordEntyty> {
+        return this.usersServiceQmq.emit(
+            {
+                cmd: USER_CMD,
+                method: 'changePassword',
+            },
+            {
+                userId,
+                hashPassword
+            }
+        )
+    }
+
+    updateUser(userId: string, update: updateUserDto): Observable<any> {
+        return this.usersServiceQmq.emit(
+            {
+                cmd: USER_CMD,
+                method: 'updateUser',
+            },
+            {
+                userId,
+                update
+            }
+        )
+    }
+
+    deleteUser(userId: string): Observable<any> {
+        return this.usersServiceQmq.emit(
+            {
+                cmd: USER_CMD,
+                method: 'deleteUser',
+            },
+            userId
+        )
     }
 }
