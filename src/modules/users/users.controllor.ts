@@ -28,7 +28,17 @@ export class UsersController {
         type: createUserDto,
     })
     async createUser(@Body() body: createUserDto): Promise<void> {
-        await this.usersService.registerUser(body);
+        try {
+            await this.usersService.registerUser(body);
+            this.logger.log([body])
+        } catch (e) {
+            this.logger.error(
+                `catch on changePassword: ${e?.message ?? JSON.stringify(e)}`,
+            )
+            throw new InternalServerErrorException({
+                message: e?.message ?? e,
+            })
+        }
     }
 
     @Get('me')
@@ -80,27 +90,6 @@ export class UsersController {
     ): Promise<void> {
         try {
             await this.usersService.changePasswordUser(user.userId, body.hashPassword);
-        } catch (e) {
-            this.logger.error(
-                `catch on changePassword: ${e?.message ?? JSON.stringify(e)}`,
-            )
-            throw new InternalServerErrorException({
-                message: e?.message ?? e,
-            })
-        }
-    }
-
-    @Delete('delete/:userId')
-    @ApiBearerAuth()
-    @UseRoles(rolesUserEnum.ADMIN)
-    @UseGuards(JwtAuthGuard)
-    @ApiResponse({
-        status: 200,
-        description: 'Success'
-    })
-    async deleteUser(@Param('userId') userId: string): Promise<void> {
-        try {
-            await this.usersService.deleteUser(userId);
         } catch (e) {
             this.logger.error(
                 `catch on changePassword: ${e?.message ?? JSON.stringify(e)}`,

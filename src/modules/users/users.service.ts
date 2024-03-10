@@ -4,16 +4,12 @@ import { RMQService, USER_CMD } from "src/constants";
 import { createUserDto } from "./dto/create-users.dto";
 import { Observable } from "rxjs";
 import { ChangePasswordEntyty } from "./entities/change-password.entity";
-import { updateUserEntyty } from "./entities/update-user.entity";
 import { updateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
-    constructor(
-        @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy,
-    ) {
-
-    }
+    private readonly logger = new Logger(UsersService.name)
+    @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy
 
     async registerUser(body: createUserDto): Promise<Observable<any>> {
         return this.usersServiceQmq.emit(
@@ -48,16 +44,6 @@ export class UsersService {
                 userId,
                 update
             }
-        )
-    }
-
-    deleteUser(userId: string): Observable<any> {
-        return this.usersServiceQmq.emit(
-            {
-                cmd: USER_CMD,
-                method: 'deleteUser',
-            },
-            userId
         )
     }
 }

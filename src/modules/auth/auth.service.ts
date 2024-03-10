@@ -10,11 +10,7 @@ import { UsersLoginEntity } from "./entities/user-login-entity";
 @Injectable()
 export class AuthService {
     private readonly logger = new Logger(AuthService.name)
-    constructor(
-        @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy,
-    ) {
-
-    }
+    @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy
 
     async loginUser(email: string, password: string): Promise<UsersLoginEntity> {
         const body: loginUserDto = { email, password };

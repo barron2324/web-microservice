@@ -7,6 +7,8 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from "src/throttler.p
 import { ThrottlerModule } from "@nestjs/throttler";
 import { APP_GUARD } from "@nestjs/core";
 import { JwtRoleGuard } from "../auth/guards/jwt-role.guard";
+import { CacheModule } from "@nestjs/cache-manager";
+import RegisterCacheOptions from "src/cache.providers";
 
 @Module({
     imports: [
@@ -14,9 +16,10 @@ import { JwtRoleGuard } from "../auth/guards/jwt-role.guard";
             load: [configuration],
             isGlobal: true
         }),
+        CacheModule.registerAsync(RegisterCacheOptions),
         ThrottlerModule.forRootAsync(throttlerAsyncOptions),
         AuthModule,
-        UsersModule.register(),
+        UsersModule,
     ],
     providers: [
         throttlerServiceProvider,
