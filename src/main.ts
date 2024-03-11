@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import compression from 'compression'
 import * as dayjs from 'dayjs';
 import 'dayjs/plugin/timezone';
 import 'dayjs/plugin/isToday';
@@ -21,7 +20,7 @@ async function bootstrap() {
   const logger = new Logger();
 
   const config = new DocumentBuilder()
-  .setTitle('Microservice')
+  .setTitle('DashBoard')
   .setVersion('1.0')
   .addBearerAuth()
   .build();

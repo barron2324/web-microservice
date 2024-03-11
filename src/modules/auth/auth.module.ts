@@ -6,7 +6,6 @@ import { CacheModule } from "@nestjs/cache-manager";
 import { JwtStrategy } from "./guards/jwt.strategy";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { MakeRMQServiceProvider } from "src/microservice.providers";
 import { RMQService } from "src/constants";
 
 @Module({
@@ -15,7 +14,16 @@ import { RMQService } from "src/constants";
         PassportModule,
         CacheModule.register(),
         ClientsModule.register([
-            MakeRMQServiceProvider(RMQService.USERS)
+            {
+                name: RMQService.USERS,
+                transport: Transport.RMQ,
+                options: {
+                    urls: [
+                        'amqps://daqcshnj:1HWgbSh6zkDW-EUEoGZ_v52YHC1Dm3L9@armadillo.rmq.cloudamqp.com/daqcshnj'
+                    ],
+                    noAck: true,
+                }
+            }
         ])
     ],
     controllers: [AuthController],
