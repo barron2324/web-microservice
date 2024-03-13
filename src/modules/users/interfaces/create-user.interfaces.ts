@@ -3,7 +3,7 @@ export interface CreateUserInterface {
 
     username: string;
 
-    fristname: string;
+    firstname: string;
 
     lastname: string;
 

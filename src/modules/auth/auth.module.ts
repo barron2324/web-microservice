@@ -6,7 +6,7 @@ import { CacheModule } from "@nestjs/cache-manager";
 import { JwtStrategy } from "./guards/jwt.strategy";
 import { PassportModule } from "@nestjs/passport";
 import { JwtModule } from "@nestjs/jwt";
-import { RMQService } from "src/constants";
+import { ENV_RMQ, RMQService } from "src/constants";
 
 @Module({
     imports: [
@@ -18,10 +18,12 @@ import { RMQService } from "src/constants";
                 name: RMQService.USERS,
                 transport: Transport.RMQ,
                 options: {
-                    urls: [
-                        'amqps://daqcshnj:1HWgbSh6zkDW-EUEoGZ_v52YHC1Dm3L9@armadillo.rmq.cloudamqp.com/daqcshnj'
-                    ],
+                    urls: [ENV_RMQ],
                     noAck: true,
+                    queue: RMQService.USERS,
+                    queueOptions: {
+                        durable: false
+                    },
                 }
             }
         ])

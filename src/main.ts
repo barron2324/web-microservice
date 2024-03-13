@@ -20,7 +20,7 @@ async function bootstrap() {
   const logger = new Logger();
 
   const config = new DocumentBuilder()
-  .setTitle('DashBoard')
+  .setTitle('Web Service')
   .setVersion('1.0')
   .addBearerAuth()
   .build();

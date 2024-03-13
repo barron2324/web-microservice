@@ -5,7 +5,7 @@ import { UsersController } from "./users.controllor";
 import { AuthService } from "../auth/auth.service";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "../auth/guards/jwt.strategy";
-import { RMQService } from "src/constants";
+import { ENV_RMQ, RMQService } from "src/constants";
 
 
 @Module({
@@ -16,12 +16,26 @@ import { RMQService } from "src/constants";
                 name: RMQService.USERS,
                 transport: Transport.RMQ,
                 options: {
-                    urls: [
-                        'amqps://daqcshnj:1HWgbSh6zkDW-EUEoGZ_v52YHC1Dm3L9@armadillo.rmq.cloudamqp.com/daqcshnj'
-                    ],
+                    urls: [ENV_RMQ],
                     noAck: true,
+                    queue: RMQService.USERS,
+                    queueOptions: {
+                        durable: false
+                    },
                 }
-            }
+            },
+            {
+                name: RMQService.BOOKS,
+                transport: Transport.RMQ,
+                options: {
+                    urls: [ENV_RMQ],
+                    noAck: true,
+                    queue: RMQService.BOOKS,
+                    queueOptions: {
+                        durable: true
+                    },
+                }
+            },
         ])
     ],
     controllers: [UsersController],

@@ -4,11 +4,11 @@ import { ApiProperty } from '@nestjs/swagger';
 export class updateUserDto {
     @ApiProperty({
         type: String,
-        example: 'fristname',
+        example: 'firstname',
         required: true
     })
     @IsNotEmpty()
-    fristname: string;
+    firstname: string;
 
     @ApiProperty({
         type: String,

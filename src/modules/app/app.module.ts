@@ -9,6 +9,9 @@ import { APP_GUARD } from "@nestjs/core";
 import { JwtRoleGuard } from "../auth/guards/jwt-role.guard";
 import { CacheModule } from "@nestjs/cache-manager";
 import RegisterCacheOptions from "src/cache.providers";
+import { BooksModule } from "../books/books.module";
+import { BooksStockModule } from "../books-stock/books-stock.module";
+import { OrdersModule } from "../orders/orders.module";
 
 @Module({
     imports: [
@@ -20,6 +23,9 @@ import RegisterCacheOptions from "src/cache.providers";
         ThrottlerModule.forRootAsync(throttlerAsyncOptions),
         AuthModule,
         UsersModule,
+        BooksModule,
+        BooksStockModule,
+        OrdersModule
     ],
     providers: [
         throttlerServiceProvider,

@@ -14,10 +14,10 @@ export class updateUserEntyty {
     username: string
 
     @ApiProperty({
-        example: 'fristname',
+        example: 'firstname',
         type: String
     })
-    fristname: string;
+    firstname: string;
 
     @ApiProperty({
         example: 'lastname',

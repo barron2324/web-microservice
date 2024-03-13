@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from "@nestjs/common";
+import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { RMQService, USER_CMD } from "src/constants";
 import { createUserDto } from "./dto/create-users.dto";
@@ -8,7 +8,6 @@ import { updateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
-    private readonly logger = new Logger(UsersService.name)
     @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy
 
     async registerUser(body: createUserDto): Promise<Observable<any>> {

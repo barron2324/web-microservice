@@ -14,6 +14,7 @@ import { updateUserDto } from './dto/update-user.dto';
 import { updateUserEntyty } from './entities/update-user.entity';
 import { UseRoles } from 'src/decorators/role.decorator';
 import { rolesUserEnum } from './enum/roles-user.enum';
+import { registerUserValidationPipe } from './pipes/register-user-validation.pipe';
 
 @Controller('users')
 @ApiTags('user')
@@ -27,10 +28,9 @@ export class UsersController {
     @ApiBody({
         type: createUserDto,
     })
-    async createUser(@Body() body: createUserDto): Promise<void> {
+    async createUser(@Body(registerUserValidationPipe) body: createUserDto): Promise<void> {
         try {
             await this.usersService.registerUser(body);
-            this.logger.log([body])
         } catch (e) {
             this.logger.error(
                 `catch on changePassword: ${e?.message ?? JSON.stringify(e)}`,

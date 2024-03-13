@@ -36,7 +36,6 @@ export class LoginAuthGuard extends AuthGuard('local') {
     let user: usersInterface
     try {
       user = await this.authService.getByEmail(body.email)
-      this.logger.log(user)
     } catch (e) {
       this.logger.error(e?.message ?? JSON.stringify(e))
       throw new InternalServerErrorException({
@@ -50,7 +49,7 @@ export class LoginAuthGuard extends AuthGuard('local') {
 
     const blockUser = await this.authService.getBlockUser(user.email)
     if (blockUser) {
-      throw new UnauthorizedException('This account benned!')
+      throw new UnauthorizedException(`This account ${body.email} benned!`)
     } 
 
     let counter: number = (
@@ -67,7 +66,7 @@ export class LoginAuthGuard extends AuthGuard('local') {
       await this.cacheManager.set(
         `login-failures:${user.email}`,
         counter + 1,
-        180000,
+        1000,
       )
       throw new UnprocessableEntityException(
         `Password are not valid ${counter + 1}.`,
