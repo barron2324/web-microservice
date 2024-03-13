@@ -28,12 +28,12 @@ import { JwtModule } from "@nestjs/jwt";
                 }
             },
             {
-                name: RMQService.BOOKS,
+                name: RMQService.USERS,
                 transport: Transport.RMQ,
                 options: {
                     urls: [ENV_RMQ],
                     noAck: true,
-                    queue: RMQService.BOOKS,
+                    queue: RMQService.USERS,
                     queueOptions: {
                         durable: false
                     },
