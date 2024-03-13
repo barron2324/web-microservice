@@ -1,6 +1,6 @@
 import { BadRequestException, Logger, PipeTransform } from "@nestjs/common";
 import { BooksStockService } from "src/modules/books-stock/books-stock.service";
-import { createOrderDTO } from "../dto/create-order.dto";
+import { createOrderDTO } from "../../orders/dto/create-order.dto";
 import { BooksStockInterface } from "src/modules/books-stock/interfaces/books-stock.interface";
 import { BooksInterface } from "src/modules/books/interfaces/books.interface";
 import { BooksService } from "src/modules/books/books.service";

@@ -6,6 +6,9 @@ import { AuthService } from "../auth/auth.service";
 import { PassportModule } from "@nestjs/passport";
 import { JwtStrategy } from "../auth/guards/jwt.strategy";
 import { ENV_RMQ, RMQService } from "src/constants";
+import { BooksService } from "../books/books.service";
+import { OrdersService } from "../orders/orders.service";
+import { BooksStockService } from "../books-stock/books-stock.service";
 
 
 @Module({
@@ -32,7 +35,7 @@ import { ENV_RMQ, RMQService } from "src/constants";
                     noAck: true,
                     queue: RMQService.BOOKS,
                     queueOptions: {
-                        durable: true
+                        durable: false
                     },
                 }
             },

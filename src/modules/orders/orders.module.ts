@@ -27,6 +27,18 @@ import { JwtModule } from "@nestjs/jwt";
                     },
                 }
             },
+            {
+                name: RMQService.BOOKS,
+                transport: Transport.RMQ,
+                options: {
+                    urls: [ENV_RMQ],
+                    noAck: true,
+                    queue: RMQService.BOOKS,
+                    queueOptions: {
+                        durable: false
+                    },
+                }
+            },
         ])
     ],
     controllers: [OrdersController],
