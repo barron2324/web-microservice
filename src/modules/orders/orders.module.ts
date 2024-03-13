@@ -23,7 +23,7 @@ import { JwtModule } from "@nestjs/jwt";
                     noAck: true,
                     queue: RMQService.BOOKS,
                     queueOptions: {
-                        durable: true
+                        durable: false
                     },
                 }
             },
